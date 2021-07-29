@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -43,10 +43,10 @@ public class Book {
 
     private boolean enabled = false;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private Set<Comment> comments;
+    private List<Comment> comments;
 }

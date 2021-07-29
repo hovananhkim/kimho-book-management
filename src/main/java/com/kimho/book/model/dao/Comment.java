@@ -1,5 +1,6 @@
 package com.kimho.book.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 

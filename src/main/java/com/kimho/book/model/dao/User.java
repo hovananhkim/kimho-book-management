@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,18 +40,30 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user", "comments"})
-    private Set<Book> books;
+    private List<Book> books;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties("user")
-    private Set<Comment> comments;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"user", "book"})
+    private List<Comment> comments;
 
     public User(String email, String firstname, String lastname, String password) {
         this.email = email;
         this.firstName = firstname;
         this.lastName = lastname;
         this.password = password;
+    }
+
+    public boolean isSuperAdmin() {
+        return (this.getRole().getName().equals("ROLE_SUPER_ADMIN"));
+    }
+
+    public boolean isAdmin() {
+        return (this.getRole().getName().equals("ROLE_ADMIN"));
+    }
+
+    public boolean isUser() {
+        return (this.getRole().getName().equals("ROLE_USER"));
     }
 }
