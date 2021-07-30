@@ -26,7 +26,6 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
     private DtoToBook dtoToBook;
     @Autowired
     private UserServiceImpl userService;
-    private final User myUser = userService.getMyUser();
 
     @Override
     public List<BookDto> getAll() {
@@ -47,6 +46,8 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
 
     @Override
     public BookDto post(BookDto bookDto) {
+        User myUser = userService.getMyUser();
+        bookDto.setUserId(userService.getMyUser().getId());
         Book book = dtoToBook.convert(bookDto);
         if (myUser.isAdmin() || myUser.isSuperAdmin()) {
             book.setEnabled(true);
@@ -89,6 +90,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
     }
 
     private boolean checkAuthorizationEditBook(Book book) {
+        User myUser = userService.getMyUser();
         User userCreateBook = book.getUser();
         if (userCreateBook.getId() == myUser.getId()) {
             return true;
@@ -102,6 +104,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
 
     private boolean checkAuthorizationEnableBook(Book book) {
         User userCreateBook = book.getUser();
+        User myUser = userService.getMyUser();
         if (myUser.isSuperAdmin()) {
             return true;
         } else if (myUser.isAdmin() && userCreateBook.isUser()) {

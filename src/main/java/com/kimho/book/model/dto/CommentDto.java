@@ -19,7 +19,6 @@ public class CommentDto {
     @Column(columnDefinition = "TEXT")
     private String message;
 
-    @NotNull
     private long userId;
 
     @NotNull

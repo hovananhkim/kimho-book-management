@@ -42,7 +42,6 @@ public class BookDto {
 
     private boolean enabled = false;
 
-    @NotNull
     private long userId;
 
     @JsonIgnoreProperties("bookId")

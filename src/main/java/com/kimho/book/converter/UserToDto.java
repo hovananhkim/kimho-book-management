@@ -29,8 +29,12 @@ public class UserToDto extends Converter<User, UserDto> {
         userDto.setEnabled(source.isEnabled());
         userDto.setAvatar(source.getAvatar());
         userDto.setRole(source.getRole().getName());
-        userDto.setBooks(bookToDto.convert(source.getBooks()));
-        userDto.setComments(commentToDto.convert(source.getComments()));
+        if (source.getBooks() != null) {
+            userDto.setBooks(bookToDto.convert(source.getBooks()));
+        }
+        if (source.getComments()!=null) {
+            userDto.setComments(commentToDto.convert(source.getComments()));
+        }
         return userDto;
     }
 }

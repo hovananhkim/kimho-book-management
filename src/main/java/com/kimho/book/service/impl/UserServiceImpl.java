@@ -56,14 +56,14 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         user.setLastName(userDto.getLastName());
         user.setAvatar(userDto.getAvatar());
         user.setRole(roleRepository.findByName("ROLE_USER"));
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
         return userToDto.convert(userRepository.save(user));
     }
 
     @Override
     public UserDto put(UserUpdate userEdition, long id) {
-
         User user = findById(id);
+        checkAuthorization(user);
         user.setFirstName(userEdition.getFirstName());
         user.setLastName(userEdition.getLastName());
         user.setAvatar(userEdition.getAvatar());
@@ -74,52 +74,64 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     public void delete(long id) {
     }
 
-    public User enable(long id) {
+    public UserDto enable(long id) {
         User user = findById(id);
         User myUser = getMyUser();
         if (user.isSuperAdmin()) {
             throw new UnauthorizedException("Unauthorized");
         } else if (myUser.isAdmin() && user.isUser() || myUser.isSuperAdmin()) {
             user.setEnabled(!user.isEnabled());
-            return userRepository.save(user);
+            return userToDto.convert(userRepository.save(user));
         }
         throw new UnauthorizedException("Unauthorized");
     }
 
-    public User upgradeAdmin(long id) {
+    public UserDto upgradeAdmin(long id) {
         User user = findById(id);
         User myUser = getMyUser();
         if (myUser.isSuperAdmin()) {
             user.setRole(roleRepository.findByName("ROLE_ADMIN"));
-            return userRepository.save(user);
-        } else {
-            throw new UnauthorizedException("Unauthorized");
-        }
-    }
-
-    public User downgradeUser(long id) {
-        User user = findById(id);
-        User myUser = getMyUser();
-        if (myUser.isSuperAdmin()) {
-            user.setRole(roleRepository.findByName("ROLE_USER"));
-            return userRepository.save(user);
+            user.setEnabled(true);
+            return userToDto.convert(userRepository.save(user));
         }
         throw new UnauthorizedException("Unauthorized");
     }
 
-    public User changePassword(Password password, long id) {
+    public UserDto downgradeUser(long id) {
         User user = findById(id);
-        checkAuthorization(user);
+        User myUser = getMyUser();
+        if (myUser.isSuperAdmin()) {
+            user.setRole(roleRepository.findByName("ROLE_USER"));
+            return userToDto.convert(userRepository.save(user));
+        }
+        throw new UnauthorizedException("Unauthorized");
+    }
+
+    public UserDto changePassword(Password password, long id) {
+        User user = findById(id);
+        User myUser = getMyUser();
+        if (!(myUser.getId()==user.getId())){
+            throw new UnauthorizedException("Unauthorized");
+        }
         if (!password.getNewPassword().equals(password.getPrePassword())) {
             throw new BadRequestException("Password is invalid");
         }
         boolean result = passwordEncoder.matches(password.getPassword(), user.getPassword());
         if (result) {
             user.setPassword(new BCryptPasswordEncoder().encode(password.getNewPassword()));
-            return userRepository.save(user);
+            return userToDto.convert(userRepository.save(user));
         } else {
             throw new BadRequestException("Password incorrect");
         }
+    }
+    public UserDto adminResetPassword(long id){
+        User user = findById(id);
+        User myUser = getMyUser();
+        if (myUser.isSuperAdmin() || (myUser.isAdmin()) && user.isUser()){
+            user.setPassword("password");
+            return userToDto.convert(userRepository.save(user));
+        }
+        throw new UnauthorizedException("Unauthorized");
     }
 
     public User getMyUser() {

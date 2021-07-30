@@ -33,22 +33,27 @@ public class UserController {
     }
 
     @PutMapping("/{id}/security")
-    public User changPassword(@Valid @RequestBody Password password, @PathVariable long id){
+    public UserDto changPassword(@Valid @RequestBody Password password, @PathVariable long id){
         return userService.changePassword(password, id);
     }
 
+    @PutMapping("/{id}/reset-password")
+    public UserDto resetPassword(@PathVariable long id){
+        return userService.adminResetPassword(id);
+    }
+
     @PutMapping("/{id}/upgrade")
-    public User upgradeAdmin(@PathVariable long id) {
+    public UserDto upgradeAdmin(@PathVariable long id) {
         return userService.upgradeAdmin(id);
     }
 
     @PutMapping("/{id}/downgrade")
-    public User downgradeUser(@PathVariable long id) {
+    public UserDto downgradeUser(@PathVariable long id) {
         return userService.downgradeUser(id);
     }
 
     @PutMapping("/{id}/enable")
-    public User enable(@PathVariable long id) {
+    public UserDto enable(@PathVariable long id) {
         return userService.enable(id);
     }
 }
