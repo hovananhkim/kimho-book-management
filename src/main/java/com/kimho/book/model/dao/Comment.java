@@ -2,7 +2,6 @@ package com.kimho.book.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class Comment {
     @Id
@@ -32,8 +30,13 @@ public class Comment {
     private Book book;
 
     @NotNull
-    private Date createdAt = new Date();
+    private Date createdAt;
 
     @NotNull
-    private Date updatedAt = new Date();
+    private Date updatedAt;
+
+    public Comment() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
 }

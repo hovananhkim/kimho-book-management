@@ -22,12 +22,14 @@ public class JwtAuthenticationController {
     private JwtAuthenticationService jwtAuthenticationService;
     @Autowired
     private UserServiceImpl userService;
+
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest login) {
         return jwtAuthenticationService.login(login);
     }
+
     @PostMapping("/register")
-    public UserDto post(@Valid @RequestBody UserDto user) {
+    public UserDto register(@Valid @RequestBody UserDto user) {
         return userService.post(user);
     }
 }

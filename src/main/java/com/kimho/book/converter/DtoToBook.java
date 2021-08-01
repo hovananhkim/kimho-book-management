@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 public class DtoToBook extends Converter<BookDto, Book> {
     @Autowired
     private UserServiceImpl userService;
-    @Autowired
-    private DtoToComment dtoToComment;
+
     public Book convert(BookDto source) {
         Book book = new Book();
         book.setId(source.getId());
@@ -22,8 +21,6 @@ public class DtoToBook extends Converter<BookDto, Book> {
         book.setEnabled(source.isEnabled());
         book.setUser(userService.findById(source.getUserId()));
         book.setImage(source.getImage());
-        book.setCreatedAt(source.getCreatedAt());
-        book.setUpdatedAt(source.getUpdatedAt());
         return book;
     }
 }

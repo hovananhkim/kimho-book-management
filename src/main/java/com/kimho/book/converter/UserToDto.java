@@ -32,7 +32,7 @@ public class UserToDto extends Converter<User, UserDto> {
         if (source.getBooks() != null) {
             userDto.setBooks(bookToDto.convert(source.getBooks()));
         }
-        if (source.getComments()!=null) {
+        if (source.getComments() != null) {
             userDto.setComments(commentToDto.convert(source.getComments()));
         }
         return userDto;

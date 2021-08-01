@@ -15,5 +15,5 @@ public class Password {
     @NotBlank
     private String newPassword;
     @NotBlank
-    private String prePassword;
+    private String confirmPassword;
 }

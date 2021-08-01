@@ -38,20 +38,22 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
         return commentToDto.convert(commentRepository.findById(id).get());
     }
 
-    private Comment findById(long id){
+    private Comment findById(long id) {
         verifyCommentIsExist(id);
         return commentRepository.findById(id).get();
     }
+
     @Override
     public CommentDto post(CommentDto commentDto) {
         commentDto.setUserId(userService.getMyUser().getId());
-        return commentToDto.convert(commentRepository.save(dtoToComment.convert(commentDto)));
+        Comment comment = dtoToComment.convert(commentDto);
+        return commentToDto.convert(commentRepository.save(comment));
     }
 
     @Override
     public CommentDto put(CommentUpdate commentEdition, long id) {
         Comment comment = findById(id);
-        if (!checkAuthorized(comment.getUser())){
+        if (!checkAuthorized(comment.getUser())) {
             throw new UnauthorizedException("Unauthorized");
         }
         comment.setMessage(commentEdition.getMessage());
@@ -62,7 +64,7 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
     @Override
     public void delete(long id) {
         verifyCommentIsExist(id);
-        if (!checkAuthorized(findById(id).getUser())){
+        if (!checkAuthorized(findById(id).getUser())) {
             throw new UnauthorizedException("Unauthorized");
         }
         commentRepository.deleteById(id);

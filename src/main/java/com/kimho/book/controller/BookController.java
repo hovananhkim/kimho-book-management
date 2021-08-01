@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
     @Autowired
     private BookServiceImpl bookService;
@@ -27,12 +28,12 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto post(@Valid @RequestBody BookDto bookDto){
+    public BookDto add(@Valid @RequestBody BookDto bookDto) {
         return bookService.post(bookDto);
     }
 
     @PutMapping("/{id}")
-    public BookDto put(@Valid @RequestBody BookUpdate book, @PathVariable long id) {
+    public BookDto edit(@Valid @RequestBody BookUpdate book, @PathVariable long id) {
         return bookService.put(book, id);
     }
 
@@ -42,7 +43,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id){
+    public void delete(@PathVariable long id) {
         bookService.delete(id);
     }
 }

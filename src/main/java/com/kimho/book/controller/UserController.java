@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
@@ -28,28 +29,28 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserDto put(@Valid @RequestBody UserUpdate user, @PathVariable long id) {
+    public UserDto edit(@Valid @RequestBody UserUpdate user, @PathVariable long id) {
         return userService.put(user, id);
     }
 
     @PutMapping("/{id}/security")
-    public UserDto changPassword(@Valid @RequestBody Password password, @PathVariable long id){
+    public UserDto changePassword(@Valid @RequestBody Password password, @PathVariable long id) {
         return userService.changePassword(password, id);
     }
 
     @PutMapping("/{id}/reset-password")
-    public UserDto resetPassword(@PathVariable long id){
+    public UserDto resetPassword(@PathVariable long id) {
         return userService.adminResetPassword(id);
     }
 
-    @PutMapping("/{id}/upgrade")
+    @PutMapping("/{id}/upgrade-admin")
     public UserDto upgradeAdmin(@PathVariable long id) {
         return userService.upgradeAdmin(id);
     }
 
-    @PutMapping("/{id}/downgrade")
-    public UserDto downgradeUser(@PathVariable long id) {
-        return userService.downgradeUser(id);
+    @PutMapping("/{id}/remove-admin")
+    public UserDto removeAdmin(@PathVariable long id) {
+        return userService.removeAdmin(id);
     }
 
     @PutMapping("/{id}/enable")

@@ -97,7 +97,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
-    public UserDto downgradeUser(long id) {
+    public UserDto removeAdmin(long id) {
         User user = findById(id);
         User myUser = getMyUser();
         if (myUser.isSuperAdmin()) {
@@ -113,7 +113,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         if (!(myUser.getId()==user.getId())){
             throw new UnauthorizedException("Unauthorized");
         }
-        if (!password.getNewPassword().equals(password.getPrePassword())) {
+        if (!password.getNewPassword().equals(password.getConfirmPassword())) {
             throw new BadRequestException("Password is invalid");
         }
         boolean result = passwordEncoder.matches(password.getPassword(), user.getPassword());

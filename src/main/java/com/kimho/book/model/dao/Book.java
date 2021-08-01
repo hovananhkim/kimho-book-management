@@ -14,7 +14,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class Book {
     @Id
@@ -32,16 +31,16 @@ public class Book {
 
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private Date createdAt = new Date();
+    private Date createdAt ;
 
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private Date updatedAt = new Date();
+    private Date updatedAt ;
 
     @URL(protocol = "http")
     private String image;
 
-    private boolean enabled = false;
+    private boolean enabled ;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -49,4 +48,10 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public Book() {
+        this.enabled = false;
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
 }

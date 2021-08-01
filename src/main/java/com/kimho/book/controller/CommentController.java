@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comments")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
@@ -26,17 +27,17 @@ public class CommentController {
     }
 
     @PostMapping
-    public CommentDto post(@Valid @RequestBody CommentDto bookDto){
+    public CommentDto add(@Valid @RequestBody CommentDto bookDto) {
         return commentService.post(bookDto);
     }
 
     @PutMapping("/{id}")
-    public CommentDto put(@Valid @RequestBody CommentUpdate comment, @PathVariable long id) {
+    public CommentDto edit(@Valid @RequestBody CommentUpdate comment, @PathVariable long id) {
         return commentService.put(comment, id);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id){
+    public void delete(@PathVariable long id) {
         commentService.delete(id);
     }
 }
