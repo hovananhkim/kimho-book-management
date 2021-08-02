@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class DtoToComment extends Converter<CommentDto, Comment> {
     @Autowired
     private UserServiceImpl userService;
+
     @Autowired
     private BookRepository bookRepository;
 

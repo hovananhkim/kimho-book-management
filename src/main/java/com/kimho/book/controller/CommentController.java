@@ -28,12 +28,12 @@ public class CommentController {
 
     @PostMapping
     public CommentDto add(@Valid @RequestBody CommentDto bookDto) {
-        return commentService.post(bookDto);
+        return commentService.add(bookDto);
     }
 
     @PutMapping("/{id}")
     public CommentDto edit(@Valid @RequestBody CommentUpdate comment, @PathVariable long id) {
-        return commentService.put(comment, id);
+        return commentService.edit(comment, id);
     }
 
     @DeleteMapping("/{id}")

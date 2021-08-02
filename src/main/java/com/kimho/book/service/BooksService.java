@@ -7,9 +7,9 @@ public interface BooksService<T, S> {
 
     T get(long id);
 
-    T post(T t);
+    T add(T t);
 
-    T put(S t, long id);
+    T edit(S t, long id);
 
     void delete(long id);
 }

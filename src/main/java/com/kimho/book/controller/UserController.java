@@ -1,6 +1,5 @@
 package com.kimho.book.controller;
 
-import com.kimho.book.model.dao.User;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
 import com.kimho.book.model.secutiry.Password;
@@ -30,7 +29,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public UserDto edit(@Valid @RequestBody UserUpdate user, @PathVariable long id) {
-        return userService.put(user, id);
+        return userService.edit(user, id);
     }
 
     @PutMapping("/{id}/security")

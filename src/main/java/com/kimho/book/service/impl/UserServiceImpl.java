@@ -24,10 +24,13 @@ import java.util.List;
 public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RoleRepository roleRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserToDto userToDto;
 
@@ -48,7 +51,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     }
 
     @Override
-    public UserDto post(UserDto userDto) {
+    public UserDto add(UserDto userDto) {
         verifyUserIsExist(userDto.getEmail());
         User user = new User();
         user.setEmail(userDto.getEmail());
@@ -61,7 +64,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     }
 
     @Override
-    public UserDto put(UserUpdate userEdition, long id) {
+    public UserDto edit(UserUpdate userEdition, long id) {
         User user = findById(id);
         checkAuthorization(user);
         user.setFirstName(userEdition.getFirstName());

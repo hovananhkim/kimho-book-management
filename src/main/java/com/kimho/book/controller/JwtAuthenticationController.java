@@ -1,6 +1,5 @@
 package com.kimho.book.controller;
 
-import com.kimho.book.model.dao.User;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.secutiry.JwtRequest;
 import com.kimho.book.model.secutiry.JwtResponse;
@@ -20,6 +19,7 @@ import javax.validation.Valid;
 public class JwtAuthenticationController {
     @Autowired
     private JwtAuthenticationService jwtAuthenticationService;
+
     @Autowired
     private UserServiceImpl userService;
 
@@ -30,6 +30,6 @@ public class JwtAuthenticationController {
 
     @PostMapping("/register")
     public UserDto register(@Valid @RequestBody UserDto user) {
-        return userService.post(user);
+        return userService.add(user);
     }
 }

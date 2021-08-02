@@ -20,10 +20,13 @@ import java.util.List;
 public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
     @Autowired
     private BookRepository bookRepository;
+
     @Autowired
     private BookToDto bookToDto;
+
     @Autowired
     private DtoToBook dtoToBook;
+
     @Autowired
     private UserServiceImpl userService;
 
@@ -45,7 +48,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
     }
 
     @Override
-    public BookDto post(BookDto bookDto) {
+    public BookDto add(BookDto bookDto) {
         User myUser = userService.getMyUser();
         bookDto.setUserId(userService.getMyUser().getId());
         Book book = dtoToBook.convert(bookDto);
@@ -57,7 +60,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
     }
 
     @Override
-    public BookDto put(BookUpdate bookEdition, long id) {
+    public BookDto edit(BookUpdate bookEdition, long id) {
         verifyBookIsExist(id);
         Book book = bookRepository.findById(id).get();
         if (!checkAuthorizationEditBook(book)) {
@@ -82,7 +85,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
 
     public BookDto enable(long id) {
         Book book = bookRepository.getById(id);
-        if (!checkAuthorizationEnableBook(book)){
+        if (!checkAuthorizationEnableBook(book)) {
             throw new UnauthorizedException("Unauthorized");
         }
         book.setEnabled(!book.isEnabled());
@@ -107,9 +110,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         User myUser = userService.getMyUser();
         if (myUser.isSuperAdmin()) {
             return true;
-        } else if (myUser.isAdmin() && userCreateBook.isUser()) {
-            return true;
-        } else if (myUser.isAdmin() && (myUser.getId() == userCreateBook.getId())) {
+        } else if (myUser.isAdmin() && (userCreateBook.isUser() || myUser.getId() == userCreateBook.getId())) {
             return true;
         }
         return false;

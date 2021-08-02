@@ -16,6 +16,7 @@ import java.util.Set;
 public class UserToDto extends Converter<User, UserDto> {
     @Autowired
     private BookToDto bookToDto;
+
     @Autowired
     private CommentToDto commentToDto;
 

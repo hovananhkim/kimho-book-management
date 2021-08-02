@@ -20,10 +20,13 @@ import java.util.List;
 public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdate> {
     @Autowired
     private CommentRepository commentRepository;
+
     @Autowired
     private CommentToDto commentToDto;
+
     @Autowired
     private DtoToComment dtoToComment;
+
     @Autowired
     private UserServiceImpl userService;
 
@@ -44,14 +47,14 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
     }
 
     @Override
-    public CommentDto post(CommentDto commentDto) {
+    public CommentDto add(CommentDto commentDto) {
         commentDto.setUserId(userService.getMyUser().getId());
         Comment comment = dtoToComment.convert(commentDto);
         return commentToDto.convert(commentRepository.save(comment));
     }
 
     @Override
-    public CommentDto put(CommentUpdate commentEdition, long id) {
+    public CommentDto edit(CommentUpdate commentEdition, long id) {
         Comment comment = findById(id);
         if (!checkAuthorized(comment.getUser())) {
             throw new UnauthorizedException("Unauthorized");
