@@ -83,6 +83,11 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         bookRepository.deleteById(id);
     }
 
+    public List<BookDto> findByTitleOrAuthor(String keyword){
+        return bookToDto.convert(bookRepository.findByTitleContainsOrAuthorContains(keyword, keyword));
+    }
+
+
     public BookDto enable(long id) {
         Book book = bookRepository.getById(id);
         if (!checkAuthorizationEnableBook(book)) {

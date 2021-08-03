@@ -42,7 +42,7 @@ public class UserController {
         return userService.adminResetPassword(id);
     }
 
-    @PutMapping("/{id}/upgrade-admin")
+    @PutMapping("/{id}/set-admin")
     public UserDto upgradeAdmin(@PathVariable long id) {
         return userService.upgradeAdmin(id);
     }

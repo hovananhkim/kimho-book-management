@@ -1,5 +1,6 @@
 package com.kimho.book.config;
 
+import com.kimho.book.exception.UnauthorizedException;
 import com.kimho.book.service.impl.UserDetailServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -42,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (IllegalArgumentException e) {
                 logger.error("an error occurred during getting username from token", e);
             } catch (ExpiredJwtException e) {
-                logger.error("the token is expired and not valid anymore", e);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             } catch (MalformedJwtException e){
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }

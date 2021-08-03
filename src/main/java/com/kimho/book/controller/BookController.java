@@ -45,4 +45,9 @@ public class BookController {
     public void delete(@PathVariable long id) {
         bookService.delete(id);
     }
+
+    @GetMapping("/search")
+    public List<BookDto> findByTitle(@RequestParam String keyword){
+        return bookService.findByTitleOrAuthor(keyword);
+    }
 }

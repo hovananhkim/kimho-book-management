@@ -116,9 +116,6 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         if (!(myUser.getId()==user.getId())){
             throw new UnauthorizedException("Unauthorized");
         }
-        if (!password.getNewPassword().equals(password.getConfirmPassword())) {
-            throw new BadRequestException("Password is invalid");
-        }
         boolean result = passwordEncoder.matches(password.getPassword(), user.getPassword());
         if (result) {
             user.setPassword(new BCryptPasswordEncoder().encode(password.getNewPassword()));

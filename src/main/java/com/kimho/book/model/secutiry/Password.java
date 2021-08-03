@@ -14,6 +14,4 @@ public class Password {
     private String password;
     @NotBlank
     private String newPassword;
-    @NotBlank
-    private String confirmPassword;
 }
