@@ -17,6 +17,6 @@ public class BookUpdate {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @URL(protocol = "http")
+    @URL(protocol = "https")
     private String image;
 }

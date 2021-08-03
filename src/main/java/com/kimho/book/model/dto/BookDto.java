@@ -12,7 +12,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -42,7 +41,10 @@ public class BookDto {
 
     private boolean enabled = false;
 
+    @NotNull
     private long userId;
+
+    private String username;
 
     @JsonIgnoreProperties("bookId")
     private List<CommentDto> comments;

@@ -37,7 +37,7 @@ public class Book {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private Date updatedAt ;
 
-    @URL(protocol = "http")
+    @URL(protocol = "https")
     private String image;
 
     private boolean enabled ;
