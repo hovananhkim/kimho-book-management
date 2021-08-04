@@ -83,7 +83,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         bookRepository.deleteById(id);
     }
 
-    public List<BookDto> findByTitleOrAuthor(String keyword){
+    public List<BookDto> findByTitleOrAuthor(String keyword) {
         return bookToDto.convert(bookRepository.findByTitleContainsOrAuthorContains(keyword, keyword));
     }
 
@@ -123,7 +123,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
 
     public void verifyBookIsExist(long id) {
         if (!bookRepository.existsById(id)) {
-            throw new NotFoundException("Book not found");
+            throw new NotFoundException(String.format("Book id: %d not found", id));
         }
     }
 }

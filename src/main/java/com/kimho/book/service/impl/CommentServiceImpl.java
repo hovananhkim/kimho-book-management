@@ -32,7 +32,7 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
 
     @Override
     public List<CommentDto> getAll() {
-        return commentToDto.convert(commentRepository.findAll());
+        return null;
     }
 
     @Override
@@ -77,17 +77,13 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
         User myUser = userService.getMyUser();
         if (myUser.getId() == userCreateComment.getId()) {
             return true;
-        } else if (myUser.isSuperAdmin()) {
-            return true;
-        } else if (myUser.isAdmin() && userCreateComment.isUser()) {
-            return true;
         }
         return false;
     }
 
     private void verifyCommentIsExist(long id) {
         if (!commentRepository.existsById(id)) {
-            throw new NotFoundException("Comment not found");
+            throw new NotFoundException(String.format("Comment id: %d not found", id));
         }
     }
 }

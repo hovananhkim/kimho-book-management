@@ -113,7 +113,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     public UserDto changePassword(Password password, long id) {
         User user = findById(id);
         User myUser = getMyUser();
-        if (!(myUser.getId()==user.getId())){
+        if (!(myUser.getId() == user.getId())) {
             throw new UnauthorizedException("Unauthorized");
         }
         boolean result = passwordEncoder.matches(password.getPassword(), user.getPassword());
@@ -124,10 +124,11 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
             throw new BadRequestException("Password incorrect");
         }
     }
-    public UserDto adminResetPassword(long id){
+
+    public UserDto adminResetPassword(long id) {
         User user = findById(id);
         User myUser = getMyUser();
-        if (myUser.isSuperAdmin() || (myUser.isAdmin()) && user.isUser()){
+        if (myUser.isSuperAdmin() || (myUser.isAdmin()) && user.isUser()) {
             user.setPassword("password");
             return userToDto.convert(userRepository.save(user));
         }
@@ -154,7 +155,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
 
     public void verifyUserIsExist(long id) {
         if (!userRepository.existsById(id)) {
-            throw new NotFoundException("User not found");
+            throw new NotFoundException(String.format("User id: %d not found", id));
         }
     }
 }
