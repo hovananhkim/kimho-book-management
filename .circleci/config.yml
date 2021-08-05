@@ -9,9 +9,9 @@ jobs:
       # specify the version you desire here
       - image: circleci/openjdk:11-jdk
         environment:
-          DATABASE_URL: jdbc:postgresql://127.0.0.1:5432/book
-          DATABASE_USER: kimho
-          DATABASE_PASSWORD: postgres
+          DATABASE_URL: jdbc:postgresql://127.0.0.1:5432/databasename
+            DATABASE_USER: username
+            DATABASE_PASSWORD: password
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -25,6 +25,11 @@ jobs:
 
     steps:
       - checkout
+      - run: apt-get update -qq && apt-get install -y postgresql
+      - run:
+          command: |
+            psql -h 127.0.0.1 -U postgres -c "CREATE DATABASE databasename;"
+            psql -h 127.0.0.1 -U postgres -c "CREATE USER username WITH PASSWORD 'password'; GRANT ALL PRIVILEGES ON DATABASE databasename TO username;"
       # Download and cache dependencies
       - restore_cache:
           keys:
