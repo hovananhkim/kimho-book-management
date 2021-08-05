@@ -36,9 +36,8 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
     }
 
     @Override
-    public CommentDto get(long id) {
-        verifyCommentIsExist(id);
-        return commentToDto.convert(commentRepository.findById(id).get());
+    public CommentDto get(long id)  {
+        return commentToDto.convert(findById(id));
     }
 
     private Comment findById(long id) {
