@@ -29,9 +29,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             User user = new User(email, firstname, lastname, new BCryptPasswordEncoder().encode(password));
             Role role = roleRepository.findByName(roleName);
             user.setRole(role);
-            if (roleName.equals("ROLE_SUPER_ADMIN")) {
-                user.setEnabled(true);
-            }
+            user.setEnabled(true);
             userRepository.save(user);
         }
     }

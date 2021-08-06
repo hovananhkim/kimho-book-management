@@ -34,7 +34,7 @@ public class UserDto {
 
     private String role;
 
-    @JsonIgnoreProperties({"userId", "comments"})
+    @JsonIgnoreProperties("comments")
     private List<BookDto> books;
 
     @JsonIgnoreProperties("userId")

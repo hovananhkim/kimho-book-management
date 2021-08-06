@@ -5,6 +5,7 @@ import com.kimho.book.exception.BadRequestException;
 import com.kimho.book.exception.NotFoundException;
 import com.kimho.book.exception.UnauthorizedException;
 import com.kimho.book.model.dao.User;
+import com.kimho.book.model.dto.BookDto;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
 import com.kimho.book.model.secutiry.Password;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     @Autowired
     private UserToDto userToDto;
 
+    @Autowired
+    private BookServiceImpl bookService;
     @Override
     public List<UserDto> getAll() {
         return userToDto.convert(userRepository.findAll());
