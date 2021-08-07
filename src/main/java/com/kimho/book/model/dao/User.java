@@ -13,7 +13,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -31,7 +30,7 @@ public class User {
     private String firstName;
     private String lastName;
 
-    private boolean enabled = false;
+    private boolean enabled;
 
     @URL(protocol = "http")
     private String avatar;
@@ -53,6 +52,9 @@ public class User {
         this.firstName = firstname;
         this.lastName = lastname;
         this.password = password;
+    }
+    public User() {
+        this.enabled = true;
     }
 
     public boolean isSuperAdmin() {
