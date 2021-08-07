@@ -37,6 +37,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
 
     @Autowired
     private BookServiceImpl bookService;
+
     @Override
     public List<UserDto> getAll() {
         return userToDto.convert(userRepository.findAll());
@@ -78,6 +79,13 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
 
     @Override
     public void delete(long id) {
+    }
+
+    public UserDto findByEmail(String email) {
+        if (userRepository.findByEmail(email) != null) {
+            return userToDto.convert(userRepository.findByEmail(email));
+        }
+        throw new NotFoundException(String.format("User email: %s not found", email));
     }
 
     public UserDto enable(long id) {

@@ -27,6 +27,11 @@ public class UserController {
         return userService.get(id);
     }
 
+    @GetMapping("/search")
+    public UserDto search(@RequestParam String email) {
+        return userService.findByEmail(email);
+    }
+
     @PutMapping("/{id}")
     public UserDto edit(@Valid @RequestBody UserUpdate user, @PathVariable long id) {
         return userService.edit(user, id);
