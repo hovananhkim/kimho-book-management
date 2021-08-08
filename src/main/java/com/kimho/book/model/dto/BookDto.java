@@ -36,7 +36,7 @@ public class BookDto {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private Date updatedAt = new Date();
 
-    @URL(protocol = "http")
+    @URL(protocol = "https")
     private String image;
 
     private boolean enabled = false;
