@@ -6,4 +6,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  jackson:
+    time-zone:
 jwt-key: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCbG9nIn0.ucIV1H5LjsmblZKyeiz39H1EYsNXZ9tM9PD1qKVMe1lmtpqP0L6eyQhd7I_xsmvB32TcG6h6mg1zwcn6bv3kMg
