@@ -5,10 +5,9 @@ import com.kimho.book.exception.BadRequestException;
 import com.kimho.book.exception.NotFoundException;
 import com.kimho.book.exception.UnauthorizedException;
 import com.kimho.book.model.dao.User;
-import com.kimho.book.model.dto.BookDto;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
-import com.kimho.book.model.secutiry.Password;
+import com.kimho.book.model.secutiry.PasswordUpdate;
 import com.kimho.book.repository.RoleRepository;
 import com.kimho.book.repository.UserRepository;
 import com.kimho.book.service.BooksService;
@@ -121,7 +120,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
-    public UserDto changePassword(Password password, long id) {
+    public UserDto changePassword(PasswordUpdate password, long id) {
         User user = findById(id);
         User myUser = getMyUser();
         if (!(myUser.getId() == user.getId())) {

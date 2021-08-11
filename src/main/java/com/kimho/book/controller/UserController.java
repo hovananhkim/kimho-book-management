@@ -2,7 +2,7 @@ package com.kimho.book.controller;
 
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
-import com.kimho.book.model.secutiry.Password;
+import com.kimho.book.model.secutiry.PasswordUpdate;
 import com.kimho.book.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +37,8 @@ public class UserController {
         return userService.edit(user, id);
     }
 
-    @PutMapping("/{id}/security")
-    public UserDto changePassword(@Valid @RequestBody Password password, @PathVariable long id) {
+    @PutMapping("/{id}/change-password")
+    public UserDto changePassword(@Valid @RequestBody PasswordUpdate password, @PathVariable long id) {
         return userService.changePassword(password, id);
     }
 

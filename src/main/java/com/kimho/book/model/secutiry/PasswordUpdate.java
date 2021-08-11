@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Password {
+public class PasswordUpdate {
     @NotBlank
     private String password;
     @NotBlank
