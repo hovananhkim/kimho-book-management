@@ -20,9 +20,8 @@ public class BookToDto extends Converter<Book, BookDto> {
         bookDto.setDescription(source.getDescription());
         bookDto.setEnabled(source.isEnabled());
         bookDto.setUserId(source.getUser().getId());
-        String name = String.join(" ", source.getUser().getFirstName(), source.getUser().getLastName());
-        if (name.length() > 1) {
-            bookDto.setUsername(name);
+        if (source.getUser().getFirstName().length() > 0 || source.getUser().getLastName().length() > 0) {
+            bookDto.setUsername(source.getUser().getFirstName() + source.getUser().getLastName());
         } else {
             bookDto.setUsername(source.getUser().getEmail());
         }
