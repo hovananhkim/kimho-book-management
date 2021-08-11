@@ -14,7 +14,19 @@ public class CommentToDto extends Converter<Comment, CommentDto> {
         commentDto.setMessage(source.getMessage());
         commentDto.setBookId(source.getBook().getId());
         commentDto.setUserId(source.getUser().getId());
-        commentDto.setCreatedAt(source.getCreatedAt());
+        String name = "";
+        if (source.getUser().getFirstName() != null) {
+            name += source.getUser().getFirstName();
+        }
+        if (source.getUser().getLastName() != null) {
+            name += source.getUser().getLastName();
+        }
+        if (name != ""){
+            commentDto.setUsername(name);
+        }else {
+            commentDto.setUsername(source.getUser().getEmail());
+        }
+            commentDto.setCreatedAt(source.getCreatedAt());
         commentDto.setUpdatedAt(source.getUpdatedAt());
         return commentDto;
     }
