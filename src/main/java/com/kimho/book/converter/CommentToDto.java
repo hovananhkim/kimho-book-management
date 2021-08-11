@@ -26,7 +26,7 @@ public class CommentToDto extends Converter<Comment, CommentDto> {
         }else {
             commentDto.setUsername(source.getUser().getEmail());
         }
-            commentDto.setCreatedAt(source.getCreatedAt());
+        commentDto.setCreatedAt(source.getCreatedAt());
         commentDto.setUpdatedAt(source.getUpdatedAt());
         return commentDto;
     }
