@@ -16,18 +16,14 @@ public class DtoToComment extends Converter<CommentDto, Comment> {
     private UserServiceImpl userService;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookServiceImpl bookService;
 
     @Override
     public Comment convert(CommentDto source) {
         Comment comment = new Comment();
         comment.setId(source.getId());
         comment.setMessage(source.getMessage());
-        if (bookRepository.existsById(source.getBookId())) {
-            comment.setBook(bookRepository.findById(source.getBookId()).get());
-        } else {
-            throw new NotFoundException("Book not found");
-        }
+        comment.setBook(bookService.findById(source.getBookId()));
         comment.setUser(userService.findById(source.getUserId()));
         return comment;
     }

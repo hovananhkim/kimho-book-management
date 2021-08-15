@@ -86,7 +86,9 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         }
         throw new NotFoundException(String.format("User email: %s not found", email));
     }
-
+    public List<UserDto> findByName(String name) {
+        return userToDto.convert(userRepository.findByEmailContainsOrFirstNameContainsOrLastNameContains(name, name, name));
+    }
     public UserDto enable(long id) {
         User user = findById(id);
         User myUser = getMyUser();
@@ -99,7 +101,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
-    public UserDto upgradeAdmin(long id) {
+    public UserDto setAdmin(long id) {
         User user = findById(id);
         User myUser = getMyUser();
         if (myUser.isSuperAdmin()) {

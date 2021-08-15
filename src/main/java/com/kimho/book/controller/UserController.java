@@ -28,8 +28,13 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public UserDto search(@RequestParam String email) {
+    public UserDto findByEmail(@RequestParam String email) {
         return userService.findByEmail(email);
+    }
+
+    @GetMapping("/search")
+    public List<UserDto> findByName(@RequestParam String name) {
+        return userService.findByName(name);
     }
 
     @PutMapping("/{id}")
@@ -48,8 +53,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}/set-admin")
-    public UserDto upgradeAdmin(@PathVariable long id) {
-        return userService.upgradeAdmin(id);
+    public UserDto setAdmin(@PathVariable long id) {
+        return userService.setAdmin(id);
     }
 
     @PutMapping("/{id}/remove-admin")

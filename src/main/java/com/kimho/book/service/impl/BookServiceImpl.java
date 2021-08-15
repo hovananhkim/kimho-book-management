@@ -42,7 +42,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         return bookToDto.convert(bookRepository.findById(id).get());
     }
 
-    private Book findById(long id) {
+    public Book findById(long id) {
         verifyBookIsExist(id);
         return bookRepository.findById(id).get();
     }
