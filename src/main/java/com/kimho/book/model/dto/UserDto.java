@@ -29,7 +29,7 @@ public class UserDto {
 
     private boolean enabled = false;
 
-    @URL(protocol = "http")
+    @URL(protocol = "https")
     private String avatar;
 
     private String role;

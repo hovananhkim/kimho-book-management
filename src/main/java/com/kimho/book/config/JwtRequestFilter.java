@@ -1,6 +1,5 @@
 package com.kimho.book.config;
 
-import com.kimho.book.exception.UnauthorizedException;
 import com.kimho.book.service.impl.UserDetailServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;

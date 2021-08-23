@@ -32,7 +32,7 @@ public class User {
 
     private boolean enabled;
 
-    @URL(protocol = "http")
+    @URL(protocol = "https")
     private String avatar;
 
     @ManyToOne
