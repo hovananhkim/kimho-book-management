@@ -60,7 +60,7 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
         }
         comment.setMessage(commentEdition.getMessage());
         comment.setUpdatedAt(new Date());
-        return commentToDto.convert(comment);
+        return commentToDto.convert(commentRepository.save(comment));
     }
 
     @Override

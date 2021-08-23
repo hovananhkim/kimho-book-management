@@ -27,7 +27,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
 
-    private boolean enabled = false;
+    private boolean enabled;
 
     @URL(protocol = "https")
     private String avatar;
