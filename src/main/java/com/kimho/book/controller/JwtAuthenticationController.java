@@ -3,7 +3,7 @@ package com.kimho.book.controller;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.secutiry.JwtRequest;
 import com.kimho.book.model.secutiry.JwtResponse;
-import com.kimho.book.service.JwtAuthenticationService;
+import com.kimho.book.service.impl.JwtAuthenticationServiceImpl;
 import com.kimho.book.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "http://localhost:3000")
 public class JwtAuthenticationController {
     @Autowired
-    private JwtAuthenticationService jwtAuthenticationService;
+    private JwtAuthenticationServiceImpl jwtAuthenticationService;
 
     @Autowired
     private UserServiceImpl userService;

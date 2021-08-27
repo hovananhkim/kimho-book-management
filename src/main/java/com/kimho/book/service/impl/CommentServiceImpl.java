@@ -9,15 +9,14 @@ import com.kimho.book.model.dao.User;
 import com.kimho.book.model.dto.CommentDto;
 import com.kimho.book.model.dto.CommentUpdate;
 import com.kimho.book.repository.CommentRepository;
-import com.kimho.book.service.BooksService;
+import com.kimho.book.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
-public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdate> {
+public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
@@ -31,16 +30,12 @@ public class CommentServiceImpl implements BooksService<CommentDto, CommentUpdat
     private UserServiceImpl userService;
 
     @Override
-    public List<CommentDto> getAll() {
-        return null;
-    }
-
-    @Override
-    public CommentDto get(long id)  {
+    public CommentDto get(long id) {
         return commentToDto.convert(findById(id));
     }
 
-    private Comment findById(long id) {
+    @Override
+    public Comment findById(long id) {
         verifyCommentIsExist(id);
         return commentRepository.findById(id).get();
     }

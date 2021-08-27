@@ -16,11 +16,6 @@ public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
 
-    @GetMapping
-    public List<CommentDto> getAll() {
-        return commentService.getAll();
-    }
-
     @GetMapping("/{id}")
     public CommentDto get(@PathVariable long id) {
         return commentService.get(id);

@@ -10,7 +10,7 @@ import com.kimho.book.model.dto.UserUpdate;
 import com.kimho.book.model.secutiry.PasswordUpdate;
 import com.kimho.book.repository.RoleRepository;
 import com.kimho.book.repository.UserRepository;
-import com.kimho.book.service.BooksService;
+import com.kimho.book.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -34,9 +34,6 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     @Autowired
     private UserToDto userToDto;
 
-    @Autowired
-    private BookServiceImpl bookService;
-
     @Override
     public List<UserDto> getAll() {
         return userToDto.convert(userRepository.findAll());
@@ -48,6 +45,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         return userToDto.convert(userRepository.findById(id).get());
     }
 
+    @Override
     public User findById(long id) {
         verifyUserIsExist(id);
         return userRepository.findById(id).get();
@@ -66,8 +64,6 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         return userToDto.convert(userRepository.save(user));
     }
 
-
-
     @Override
     public UserDto edit(UserUpdate userEdition, long id) {
         User user = findById(id);
@@ -79,15 +75,14 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
     }
 
     @Override
-    public void delete(long id) {
-    }
-
     public UserDto findByEmail(String email) {
         if (userRepository.findByEmail(email) != null) {
             return userToDto.convert(userRepository.findByEmail(email));
         }
         throw new NotFoundException(String.format("User email: %s not found", email));
     }
+
+    @Override
     public List<UserDto> findByName(String name) {
         return userToDto.convert(userRepository.findByEmailContainsOrFirstNameContainsOrLastNameContains(name, name, name));
     }
@@ -103,6 +98,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
+    @Override
     public UserDto setAdmin(long id) {
         User user = findById(id);
         User myUser = getMyUser();
@@ -114,6 +110,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
+    @Override
     public UserDto removeAdmin(long id) {
         User user = findById(id);
         User myUser = getMyUser();
@@ -124,6 +121,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
+    @Override
     public UserDto changePassword(PasswordUpdate password, long id) {
         User user = findById(id);
         User myUser = getMyUser();
@@ -139,6 +137,7 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         }
     }
 
+    @Override
     public UserDto adminResetPassword(long id) {
         User user = findById(id);
         User myUser = getMyUser();
@@ -149,25 +148,26 @@ public class UserServiceImpl implements BooksService<UserDto, UserUpdate> {
         throw new UnauthorizedException("Unauthorized");
     }
 
+    @Override
     public User getMyUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findByEmail(userDetails.getUsername());
     }
 
-    public void checkAuthorization(User user) {
+    private void checkAuthorization(User user) {
         User myUser = getMyUser();
         if (!(myUser.getId() == user.getId() || myUser.isSuperAdmin() || (myUser.isAdmin() && user.isUser()))) {
             throw new UnauthorizedException("Unauthorized");
         }
     }
 
-    public void verifyUserIsExist(String email) {
+    private void verifyUserIsExist(String email) {
         if (userRepository.findByEmail(email) != null) {
             throw new BadRequestException("Email is existed");
         }
     }
 
-    public void verifyUserIsExist(long id) {
+    private void verifyUserIsExist(long id) {
         if (!userRepository.existsById(id)) {
             throw new NotFoundException(String.format("User id: %d not found", id));
         }

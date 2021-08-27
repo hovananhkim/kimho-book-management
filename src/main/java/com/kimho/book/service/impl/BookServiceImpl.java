@@ -9,7 +9,7 @@ import com.kimho.book.model.dao.User;
 import com.kimho.book.model.dto.BookDto;
 import com.kimho.book.model.dto.BookUpdate;
 import com.kimho.book.repository.BookRepository;
-import com.kimho.book.service.BooksService;
+import com.kimho.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
+public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
@@ -87,7 +87,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         return bookToDto.convert(bookRepository.findByTitleContainsOrAuthorContains(keyword, keyword));
     }
 
-
+    @Override
     public BookDto enable(long id) {
         Book book = bookRepository.getById(id);
         if (!checkAuthorizationEnableBook(book)) {
@@ -97,7 +97,8 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         return bookToDto.convert(bookRepository.save(book));
     }
 
-    private boolean checkAuthorizationEditBook(Book book) {
+    @Override
+    public boolean checkAuthorizationEditBook(Book book) {
         User myUser = userService.getMyUser();
         User userCreateBook = book.getUser();
         if (userCreateBook.getId() == myUser.getId()) {
@@ -110,7 +111,8 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         return false;
     }
 
-    private boolean checkAuthorizationEnableBook(Book book) {
+    @Override
+    public boolean checkAuthorizationEnableBook(Book book) {
         User userCreateBook = book.getUser();
         User myUser = userService.getMyUser();
         if (myUser.isSuperAdmin()) {
@@ -121,6 +123,7 @@ public class BookServiceImpl implements BooksService<BookDto, BookUpdate> {
         return false;
     }
 
+    @Override
     public void verifyBookIsExist(long id) {
         if (!bookRepository.existsById(id)) {
             throw new NotFoundException(String.format("Book id: %d not found", id));
