@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Getter
@@ -22,6 +23,7 @@ public class User {
 
     @Column(unique = true)
     @Email
+    @NotEmpty
     private String email;
 
     @NotBlank
@@ -48,6 +50,7 @@ public class User {
     private List<Comment> comments;
 
     public User(String email, String firstname, String lastname, String password) {
+        this.enabled = true;
         this.email = email;
         this.firstName = firstname;
         this.lastName = lastname;
