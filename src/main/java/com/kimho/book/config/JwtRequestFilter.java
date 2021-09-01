@@ -39,6 +39,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = header.replace(TOKEN_PREFIX, "");
             try {
                 email = jwtTokenProvider.getUsernameFromToken(jwtToken);
+                System.out.println(email);
             } catch (IllegalArgumentException e) {
                 logger.error("an error occurred during getting username from token", e);
             } catch (ExpiredJwtException e) {

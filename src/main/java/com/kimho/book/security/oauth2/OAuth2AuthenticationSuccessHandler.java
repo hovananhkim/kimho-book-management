@@ -3,6 +3,8 @@ package com.kimho.book.security.oauth2;
 import com.kimho.book.config.JwtTokenProvider;
 import com.kimho.book.util.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private JwtTokenProvider tokenProvider;
 
     @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     OAuth2AuthenticationSuccessHandler(JwtTokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
@@ -28,7 +33,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response, authentication);
-
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
             return;
@@ -47,7 +51,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        }
 //
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
         String token = tokenProvider.generateToken(authentication);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
