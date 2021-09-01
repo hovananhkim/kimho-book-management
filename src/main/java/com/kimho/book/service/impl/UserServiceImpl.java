@@ -4,6 +4,7 @@ import com.kimho.book.converter.UserToDto;
 import com.kimho.book.exception.BadRequestException;
 import com.kimho.book.exception.NotFoundException;
 import com.kimho.book.exception.UnauthorizedException;
+import com.kimho.book.model.entity.AuthProvider;
 import com.kimho.book.model.entity.User;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setAvatar(userDto.getAvatar());
+        user.setProvider(AuthProvider.local);
         user.setRole(roleRepository.findByName("ROLE_USER"));
         user.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
         return userToDto.convert(userRepository.save(user));

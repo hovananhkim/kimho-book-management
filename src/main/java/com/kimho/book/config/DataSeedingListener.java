@@ -1,5 +1,6 @@
 package com.kimho.book.config;
 
+import com.kimho.book.model.entity.AuthProvider;
 import com.kimho.book.model.entity.Role;
 import com.kimho.book.model.entity.User;
 import com.kimho.book.repository.RoleRepository;
@@ -30,6 +31,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             User user = new User(email, firstname, lastname, new BCryptPasswordEncoder().encode(password));
             Role role = roleRepository.findByName(roleName);
             user.setRole(role);
+            user.setProvider(AuthProvider.local);
             userRepository.save(user);
         }
     }
