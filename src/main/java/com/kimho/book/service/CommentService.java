@@ -1,6 +1,6 @@
 package com.kimho.book.service;
 
-import com.kimho.book.model.dao.Comment;
+import com.kimho.book.model.entity.Comment;
 import com.kimho.book.model.dto.CommentDto;
 import com.kimho.book.model.dto.CommentUpdate;
 

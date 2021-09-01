@@ -1,7 +1,7 @@
 package com.kimho.book.converter;
 
 import com.kimho.book.converter.base.Converter;
-import com.kimho.book.model.dao.Comment;
+import com.kimho.book.model.entity.Comment;
 import com.kimho.book.model.dto.CommentDto;
 import org.springframework.stereotype.Component;
 

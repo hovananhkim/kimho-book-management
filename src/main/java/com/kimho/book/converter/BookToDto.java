@@ -1,7 +1,7 @@
 package com.kimho.book.converter;
 
 import com.kimho.book.converter.base.Converter;
-import com.kimho.book.model.dao.Book;
+import com.kimho.book.model.entity.Book;
 import com.kimho.book.model.dto.BookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.kimho.book.model.dao;
+package com.kimho.book.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,8 @@
 package com.kimho.book.config;
 
+import com.kimho.book.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.kimho.book.security.oauth2.OAuth2AuthenticationSuccessHandler;
+import com.kimho.book.security.oauth2.user.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +24,20 @@ public class WebServiceConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    @Autowired
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
+    @Autowired
+    private CustomOAuth2UserService oauthUserService;
+
+    @Autowired
+    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/login","/oauth2/**").permitAll()
                 .antMatchers("/v3/api-docs").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
@@ -33,6 +46,16 @@ public class WebServiceConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/books/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
                 .anyRequest().authenticated()
+                .and().oauth2Login()
+                .authorizationEndpoint()
+                .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository)
+                .and()
+                .redirectionEndpoint()
+                .and()
+                .userInfoEndpoint()
+                .userService(oauthUserService)
+                .and()
+                .successHandler(oAuth2AuthenticationSuccessHandler)
                 .and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()

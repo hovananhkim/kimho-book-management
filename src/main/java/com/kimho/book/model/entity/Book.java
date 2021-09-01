@@ -1,8 +1,7 @@
-package com.kimho.book.model.dao;
+package com.kimho.book.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 

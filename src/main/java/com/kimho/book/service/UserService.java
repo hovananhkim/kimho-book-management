@@ -1,6 +1,6 @@
 package com.kimho.book.service;
 
-import com.kimho.book.model.dao.User;
+import com.kimho.book.model.entity.User;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
 import com.kimho.book.model.secutiry.PasswordUpdate;

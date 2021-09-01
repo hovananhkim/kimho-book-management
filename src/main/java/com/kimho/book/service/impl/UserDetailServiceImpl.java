@@ -1,7 +1,7 @@
 package com.kimho.book.service.impl;
 
-import com.kimho.book.model.dao.Role;
-import com.kimho.book.model.dao.User;
+import com.kimho.book.model.entity.Role;
+import com.kimho.book.model.entity.User;
 import com.kimho.book.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

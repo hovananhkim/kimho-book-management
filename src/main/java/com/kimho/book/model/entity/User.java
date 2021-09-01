@@ -1,8 +1,7 @@
-package com.kimho.book.model.dao;
+package com.kimho.book.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
@@ -26,7 +25,6 @@ public class User {
     @NotEmpty
     private String email;
 
-    @NotBlank
     private String password;
 
     private String firstName;

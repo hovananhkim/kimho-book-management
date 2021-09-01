@@ -1,6 +1,6 @@
 package com.kimho.book.service;
 
-import com.kimho.book.model.dao.Book;
+import com.kimho.book.model.entity.Book;
 import com.kimho.book.model.dto.BookDto;
 import com.kimho.book.model.dto.BookUpdate;
 

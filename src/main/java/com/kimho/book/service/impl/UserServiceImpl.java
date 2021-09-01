@@ -4,7 +4,7 @@ import com.kimho.book.converter.UserToDto;
 import com.kimho.book.exception.BadRequestException;
 import com.kimho.book.exception.NotFoundException;
 import com.kimho.book.exception.UnauthorizedException;
-import com.kimho.book.model.dao.User;
+import com.kimho.book.model.entity.User;
 import com.kimho.book.model.dto.UserDto;
 import com.kimho.book.model.dto.UserUpdate;
 import com.kimho.book.model.secutiry.PasswordUpdate;

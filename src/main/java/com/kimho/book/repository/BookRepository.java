@@ -1,6 +1,6 @@
 package com.kimho.book.repository;
 
-import com.kimho.book.model.dao.Book;
+import com.kimho.book.model.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
