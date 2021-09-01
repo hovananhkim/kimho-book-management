@@ -13,7 +13,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
 public class JwtAuthenticationController {
     @Autowired
     private JwtAuthenticationServiceImpl jwtAuthenticationService;
