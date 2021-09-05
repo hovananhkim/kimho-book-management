@@ -3,8 +3,6 @@ package com.kimho.book.security.oauth2;
 import com.kimho.book.config.JwtTokenProvider;
 import com.kimho.book.util.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,9 +18,6 @@ import java.util.Optional;
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private JwtTokenProvider tokenProvider;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     OAuth2AuthenticationSuccessHandler(JwtTokenProvider tokenProvider) {
@@ -51,6 +46,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        }
 //
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
+
         String token = tokenProvider.generateToken(authentication);
 
         return UriComponentsBuilder.fromUriString(targetUrl)

@@ -25,25 +25,25 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         CustomOAuth2User customOAuth2User = new CustomOAuth2User(oAuth2User);
-        processOAuthPostLogin(customOAuth2User);
-        return customOAuth2User;
+        return processOAuthPostLogin(customOAuth2User);
     }
 
-    private void processOAuthPostLogin(CustomOAuth2User customOAuth2User) {
-        if (!userRepository.existsByEmail(customOAuth2User.getEmail())) {
-            User newUser = new User();
-            newUser.setEmail(customOAuth2User.getEmail());
-            newUser.setFirstName(customOAuth2User.getName());
-            newUser.setAvatar(customOAuth2User.getImageUrl());
-            newUser.setProvider(AuthProvider.google);
-            newUser.setRole(roleRepository.findByName("ROLE_USER"));
-            newUser.setEnabled(true);
-            userRepository.save(newUser);
-        }else {
-            User user = userRepository.findByEmail(customOAuth2User.getEmail());
+    private OAuth2User processOAuthPostLogin(CustomOAuth2User customOAuth2User) {
+        User user = new User();
+        if (userRepository.existsByEmail(customOAuth2User.getEmail())) {
+            user = userRepository.findByEmail(customOAuth2User.getEmail());
             user.setFirstName(customOAuth2User.getName());
             user.setAvatar(customOAuth2User.getImageUrl());
-            userRepository.save(user);
+        } else {
+            user.setAvatar(customOAuth2User.getImageUrl());
+            user.setProviderId(customOAuth2User.getId());
+            user.setEmail(customOAuth2User.getEmail());
+            user.setFirstName(customOAuth2User.getName());
+            user.setAvatar(customOAuth2User.getImageUrl());
+            user.setProvider(AuthProvider.google);
+            user.setRole(roleRepository.findByName("ROLE_USER"));
+            user.setEnabled(true);
         }
+        return UserPrincipal.create(userRepository.save(user), customOAuth2User.getAttributes());
     }
 }

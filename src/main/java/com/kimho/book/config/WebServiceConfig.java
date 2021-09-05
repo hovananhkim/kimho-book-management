@@ -3,11 +3,13 @@ package com.kimho.book.config;
 import com.kimho.book.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.kimho.book.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.kimho.book.security.oauth2.user.CustomOAuth2UserService;
+import com.kimho.book.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -73,5 +75,14 @@ public class WebServiceConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+    @Autowired
+    private UserDetailServiceImpl customUserDetailsService;
+
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(encoder());
     }
 }

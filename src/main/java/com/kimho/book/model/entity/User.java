@@ -45,6 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
+    private String providerId;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user", "comments"})
@@ -61,6 +62,7 @@ public class User {
         this.lastName = lastname;
         this.password = password;
     }
+
     public User() {
         this.enabled = true;
     }
