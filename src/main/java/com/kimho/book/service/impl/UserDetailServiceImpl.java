@@ -3,6 +3,7 @@ package com.kimho.book.service.impl;
 import com.kimho.book.model.entity.Role;
 import com.kimho.book.model.entity.User;
 import com.kimho.book.repository.UserRepository;
+import com.kimho.book.security.oauth2.user.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,11 +26,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Role role = user.getRole();
-        grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        return  new org.springframework.security.core.userdetails.User(
-                user.getEmail(),user.getPassword(),user.isEnabled(),true,true,true ,grantedAuthorities
-        );
+//        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+//        Role role = user.getRole();
+//        grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+//        return  new org.springframework.security.core.userdetails.User(
+//                user.getEmail(),user.getPassword(),user.isEnabled(),true,true,true ,grantedAuthorities
+//        );
+        return UserPrincipal.create(user);
     }
 }
