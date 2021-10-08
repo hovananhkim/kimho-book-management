@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book
+    username: kimho
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 914888416164-g424tuqjlg2dqp7l6rj37dpnuh0ifds7.apps.googleusercontent.com
+            clientSecret: 3QlSJLErsxTha3XYgiVq4jQU
+            scope:
+              - email
+              - profile
+jwt-key: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCbG9nIn0.ucIV1H5LjsmblZKyeiz39H1EYsNXZ9tM9PD1qKVMe1lmtpqP0L6eyQhd7I_xsmvB32TcG6h6mg1zwcn6bv3kMg
